@@ -1,97 +1,168 @@
-# 🌾 Smart Crop Monitor & Analytics
-
-![AgriTech Banner](https://img.shields.io/badge/Agriculture-Smart%20Farming-2e7d32?style=for-the-badge&logo=leaf&logoColor=white)
-![Python Version](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge&logo=python&logoColor=white)
-![Author](https://img.shields.io/badge/Author-Gabriel%20Bloemer-darkgreen?style=for-the-badge)
-
-<div align="center">
-  <img src="[https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=1000&auto=format&fit=crop](https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=1000&auto=format&fit=crop)" alt="Agricultura de Precisão" width="100%" style="border-radius: 12px; max-height: 350px; object-fit: cover;"/>
-</div>
-
----
-
-## 📌 Sobre o Projeto
-
-O **Smart Crop Monitor** é um sistema automatizado em Python projetado para a **Agricultura de Precisão**. Ele monitora dados ambientais em tempo real (umidade do solo, temperatura, radiação solar e pH) e toma decisões estratégicas para irrigação, reduzindo o desperdício de água e aumentando o rendimento das safras.
-
-### 🌟 Destaques
-- **Monitoramento de Solo em Tempo Real:** Medição contínua de umidade e pH.
-- **Automação de Irrigação:** Cálculo da lâmina d'água (mm/ha) necessária por hectare.
-- **Alertas Meteorológicos:** Prevenção contra estresse térmico em culturas agrícolas.
-- **Orientação a Objetos (POO):** Código modular, limpo e pronto para expansão IoT.
-
----
-
-## 💻 Código Fonte (`main.py`)
-
-Crie um arquivo chamado `main.py` no seu repositório com o código abaixo:
-
-```python
-import random
-import time
-from datetime import datetime
-
-# ==========================================
-# SMART CROP MONITOR - AGRICULTURA DE PRECISÃO
-# Autor: Gabriel Bloemer
-# ==========================================
-
-class SensorAgricola:
-    """Simula a leitura de sensores IoT no campo."""
-    @staticmethod
-    def ler_dados():
-        return {
-            "umidade_solo": round(random.uniform(18.0, 65.0), 1),      # %
-            "temperatura": round(random.uniform(14.0, 38.0), 1),        # °C
-            "ph_solo": round(random.uniform(5.5, 7.2), 2),              # pH
-            "radiacao_solar": round(random.uniform(300, 950), 0)       # W/m²
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroSustentável - Tecnologia e Campo</title>
+    <style>
+        /* Estilos Globais e CSS Moderno */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-class SistemaIrrigacao:
-    """Gerencia o acionamento dos pivôs de irrigação."""
-    def __init__(self, umidade_alvo=45.0, temp_critica=32.0):
-        self.umidade_alvo = umidade_alvo
-        self.temp_critica = temp_critica
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f7f4;
+            color: #2d3748;
+        }
 
-    def analisar(self, dados):
-        umidade = dados["umidade_solo"]
-        temp = dados["temperatura"]
+        /* Cabeçalho */
+        header {
+            background-color: #1b4332;
+            color: #ffffff;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
 
-        if umidade < self.umidade_alvo:
-            deficit = self.umidade_alvo - umidade
-            lamina_agua = round(deficit * 0.8, 1)
-            return "LIGADA", f"Necessidade de irrigação: {lamina_agua} mm/ha", "🌧️"
-        elif temp > self.temp_critica:
-            return "ALERTA", "Temperatura elevada! Ativar microaspersão.", "🔥"
-        else:
-            return "DESLIGADA", "Nível de umidade ideal.", "✅"
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
 
-def executar_monitoramento(autor="Gabriel Bloemer", ciclos=4):
-    print("=" * 60)
-    print("🌾 SMART CROP MONITOR - SISTEMA AGRÍCOLA")
-    print(f"👨‍🌾 Responsável Técnico: {autor}")
-    print("=" * 60)
+        header p {
+            font-size: 1.1rem;
+            color: #b7e4c7;
+        }
 
-    irrigacao = SistemaIrrigacao()
+        /* Navegação */
+        nav {
+            background-color: #2d6a4f;
+            display: flex;
+            justify-content: center;
+            padding: 0.8rem;
+            gap: 1.5rem;
+        }
 
-    for i in range(1, ciclos + 1):
-        agora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        dados = SensorAgricola.ler_dados()
-        status, mensagem, icone = irrigacao.analisar(dados)
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
 
-        print(f"\n[LEITURA #{i} - {agora}]")
-        print(f" ├─ Umidade do Solo  : {dados['umidade_solo']}%")
-        print(f" ├─ Temperatura Ar   : {dados['temperatura']} °C")
-        print(f" ├─ pH do Solo       : {dados['ph_solo']}")
-        print(f" ├─ Radiação Solar   : {dados['radiacao_solar']} W/m²")
-        print(f" └─ Irrigação {icone}   : [{status}] -> {mensagem}")
+        nav a:hover {
+            color: #d8f3dc;
+        }
+
+        /* Conteúdo Principal */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Seção de Destaques (Cards) */
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            flex: 1 1 calc(33.333% - 1.5rem);
+            min-width: 280px;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .card h3 {
+            color: #2d6a4f;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: #081c15;
+            color: #d8f3dc;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho Principal -->
+    <header>
+        <h1>🌱 AgroSustentável</h1>
+        <p>Inovação, tecnologia e sustentabilidade para o futuro do campo</p>
+    </header>
+
+    <!-- Barra de Navegação -->
+    <nav>
+        <a href="#sobre">Sobre</a>
+        <a href="#pilares">Pilares</a>
+        <a href="#tecnologia">Tecnologia</a>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
         
-        time.sleep(1)
+        <!-- Imagem Principal -->
+        <img class="hero-image" 
+             src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1000&auto=format&fit=crop" 
+             alt="Campo de cultivo sustentável ao pôr do sol">
 
-    print("\n" + "=" * 60)
-    print(" Monitoramento encerrado com sucesso.")
-    print("=" * 60)
+        <!-- Seção Sobre -->
+        <section id="sobre">
+            <h2>Transformando a Produção Agrícola</h2>
+            <p style="margin-top: 0.5rem;">
+                A agricultura moderna combina conhecimentos tradicionais do cultivo da terra com inovações tecnológicas para garantir a segurança alimentar de forma responsável e respeitosa ao meio ambiente.
+            </p>
+        </section>
 
-if __name__ == "__main__":
-    executar_monitoramento(autor="Gabriel Bloemer")
-    
+        <!-- Grade de Cards / Pilares -->
+        <section id="pilares" class="cards-grid">
+            <article class="card">
+                <h3>🌾 Manejo Consciente</h3>
+                <p>Uso eficiente do solo através da rotação de culturas, minimizando a erosão e preservando os nutrientes naturais.</p>
+            </article>
+
+            <article class="card">
+                <h3>💧 Gestão Hídrica</h3>
+                <p>Sistemas modernos de irrigação de precisão que evitam o desperdício de água e monitoram a umidade do solo em tempo real.</p>
+            </article>
+
+            <article class="card">
+                <h3>🤖 Tecnologia IoT</h3>
+                <p>Uso de sensores de campo e drones para monitoramento da saúde das plantas e previsão meteorológica detalhada.</p>
+            </article>
+        </section>
+
+    </main>
+
+    <!-- Rodapé da Página -->
+    <footer>
+        <p>&copy; Projeto de Agricultura Sustentável - Disponível no GitHub</p>
+    </footer>
+
+</body>
+</html>
