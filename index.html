@@ -1,0 +1,97 @@
+# 🌾 Smart Crop Monitor & Analytics
+
+![AgriTech Banner](https://img.shields.io/badge/Agriculture-Smart%20Farming-2e7d32?style=for-the-badge&logo=leaf&logoColor=white)
+![Python Version](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge&logo=python&logoColor=white)
+![Author](https://img.shields.io/badge/Author-Gabriel%20Bloemer-darkgreen?style=for-the-badge)
+
+<div align="center">
+  <img src="[https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=1000&auto=format&fit=crop](https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=1000&auto=format&fit=crop)" alt="Agricultura de Precisão" width="100%" style="border-radius: 12px; max-height: 350px; object-fit: cover;"/>
+</div>
+
+---
+
+## 📌 Sobre o Projeto
+
+O **Smart Crop Monitor** é um sistema automatizado em Python projetado para a **Agricultura de Precisão**. Ele monitora dados ambientais em tempo real (umidade do solo, temperatura, radiação solar e pH) e toma decisões estratégicas para irrigação, reduzindo o desperdício de água e aumentando o rendimento das safras.
+
+### 🌟 Destaques
+- **Monitoramento de Solo em Tempo Real:** Medição contínua de umidade e pH.
+- **Automação de Irrigação:** Cálculo da lâmina d'água (mm/ha) necessária por hectare.
+- **Alertas Meteorológicos:** Prevenção contra estresse térmico em culturas agrícolas.
+- **Orientação a Objetos (POO):** Código modular, limpo e pronto para expansão IoT.
+
+---
+
+## 💻 Código Fonte (`main.py`)
+
+Crie um arquivo chamado `main.py` no seu repositório com o código abaixo:
+
+```python
+import random
+import time
+from datetime import datetime
+
+# ==========================================
+# SMART CROP MONITOR - AGRICULTURA DE PRECISÃO
+# Autor: Gabriel Bloemer
+# ==========================================
+
+class SensorAgricola:
+    """Simula a leitura de sensores IoT no campo."""
+    @staticmethod
+    def ler_dados():
+        return {
+            "umidade_solo": round(random.uniform(18.0, 65.0), 1),      # %
+            "temperatura": round(random.uniform(14.0, 38.0), 1),        # °C
+            "ph_solo": round(random.uniform(5.5, 7.2), 2),              # pH
+            "radiacao_solar": round(random.uniform(300, 950), 0)       # W/m²
+        }
+
+class SistemaIrrigacao:
+    """Gerencia o acionamento dos pivôs de irrigação."""
+    def __init__(self, umidade_alvo=45.0, temp_critica=32.0):
+        self.umidade_alvo = umidade_alvo
+        self.temp_critica = temp_critica
+
+    def analisar(self, dados):
+        umidade = dados["umidade_solo"]
+        temp = dados["temperatura"]
+
+        if umidade < self.umidade_alvo:
+            deficit = self.umidade_alvo - umidade
+            lamina_agua = round(deficit * 0.8, 1)
+            return "LIGADA", f"Necessidade de irrigação: {lamina_agua} mm/ha", "🌧️"
+        elif temp > self.temp_critica:
+            return "ALERTA", "Temperatura elevada! Ativar microaspersão.", "🔥"
+        else:
+            return "DESLIGADA", "Nível de umidade ideal.", "✅"
+
+def executar_monitoramento(autor="Gabriel Bloemer", ciclos=4):
+    print("=" * 60)
+    print("🌾 SMART CROP MONITOR - SISTEMA AGRÍCOLA")
+    print(f"👨‍🌾 Responsável Técnico: {autor}")
+    print("=" * 60)
+
+    irrigacao = SistemaIrrigacao()
+
+    for i in range(1, ciclos + 1):
+        agora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        dados = SensorAgricola.ler_dados()
+        status, mensagem, icone = irrigacao.analisar(dados)
+
+        print(f"\n[LEITURA #{i} - {agora}]")
+        print(f" ├─ Umidade do Solo  : {dados['umidade_solo']}%")
+        print(f" ├─ Temperatura Ar   : {dados['temperatura']} °C")
+        print(f" ├─ pH do Solo       : {dados['ph_solo']}")
+        print(f" ├─ Radiação Solar   : {dados['radiacao_solar']} W/m²")
+        print(f" └─ Irrigação {icone}   : [{status}] -> {mensagem}")
+        
+        time.sleep(1)
+
+    print("\n" + "=" * 60)
+    print(" Monitoramento encerrado com sucesso.")
+    print("=" * 60)
+
+if __name__ == "__main__":
+    executar_monitoramento(autor="Gabriel Bloemer")
+    
